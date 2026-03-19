@@ -1,0 +1,121 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:controls="using:AvaloniaExercise.Controls">
+
+	<Design.PreviewWith>
+		<Border
+		Background="#444"
+		Padding="10">
+			<StackPanel
+			Spacing="10">
+				<controls:TrafficLight />
+				<controls:TrafficLight RedEnabled="True" />
+				<controls:TrafficLight YellowEnabled="True" />
+				<controls:TrafficLight GreenEnabled="True" />
+				<controls:TrafficLight RedEnabled="True" YellowEnabled="True" />
+				<controls:TrafficLight RedEnabled="True" YellowEnabled="True" GreenEnabled="True" />
+			</StackPanel>
+		</Border>
+	</Design.PreviewWith>
+
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Light">
+			<SolidColorBrush
+			x:Key="TrafficLightRed"
+			Color="#FF6666" />
+			<SolidColorBrush
+			x:Key="TrafficLightYellow"
+			Color="#FFCC66" />
+			<SolidColorBrush
+			x:Key="TrafficLightGreen"
+			Color="#66FF66" />
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Default">
+			<SolidColorBrush
+			x:Key="TrafficLightRed"
+			Color="#FF6666" />
+			<SolidColorBrush
+			x:Key="TrafficLightYellow"
+			Color="#FFCC66" />
+			<SolidColorBrush
+			x:Key="TrafficLightGreen"
+			Color="#66FF66" />
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Dark">
+			<SolidColorBrush
+			x:Key="TrafficLightRed"
+			Color="#FF6666" />
+			<SolidColorBrush
+			x:Key="TrafficLightYellow"
+			Color="#FFCC66" />
+			<SolidColorBrush
+			x:Key="TrafficLightGreen"
+			Color="#66FF66" />
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+	<ControlTheme
+	x:Key="{x:Type controls:TrafficLight}"
+	TargetType="controls:TrafficLight">
+		<Setter
+		Property="Background"
+		Value="{DynamicResource ButtonBackground}" />
+		<Setter
+		Property="Foreground"
+		Value="{DynamicResource ButtonForeground}" />
+		<Setter
+		Property="LightMargin"
+		Value="4,4" />
+		<Setter
+		Property="LightSize"
+		Value="24" />
+		<Setter
+		Property="CornerRadius"
+		Value="8" />
+		<Setter
+		Property="RedEnabled"
+		Value="False" />
+		<Setter
+		Property="YellowEnabled"
+		Value="False" />
+		<Setter
+		Property="GreenEnabled"
+		Value="False" />
+		<Setter
+		Property="Template">
+			<ControlTemplate>
+				<Border
+				CornerRadius="{TemplateBinding CornerRadius}"
+				Background="{TemplateBinding Background}"
+				Padding="8"
+				BorderThickness="0">
+					<StackPanel
+					Orientation="Horizontal">
+						<Ellipse
+						Margin="{TemplateBinding LightMargin}"
+						Fill="{DynamicResource TrafficLightRed}"
+						Width="{TemplateBinding LightSize}"
+						Height="{TemplateBinding LightSize}"
+						IsEnabled="{TemplateBinding RedEnabled}" />
+						<Ellipse
+						Margin="{TemplateBinding LightMargin}"
+						Fill="{DynamicResource TrafficLightYellow}"
+						Width="{TemplateBinding LightSize}"
+						Height="{TemplateBinding LightSize}"
+						IsEnabled="{TemplateBinding YellowEnabled}" />
+						<Ellipse
+						Margin="{TemplateBinding LightMargin}"
+						Fill="{DynamicResource TrafficLightGreen}"
+						Width="{TemplateBinding LightSize}"
+						Height="{TemplateBinding LightSize}"
+						IsEnabled="{TemplateBinding GreenEnabled}" />
+					</StackPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+
+		<Style Selector="^ /template/ Ellipse:disabled">
+			<Setter Property="Fill" Value="{DynamicResource ButtonBackground}" />
+		</Style>
+	</ControlTheme>
+</ResourceDictionary>
