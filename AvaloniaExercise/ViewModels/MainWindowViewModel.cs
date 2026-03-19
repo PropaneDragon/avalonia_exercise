@@ -9,6 +9,7 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly ITrafficLightService _trafficLightService;
 
     public TrafficLightStatusViewModel TrafficLightStatusViewModel { get; }
+    public PedestrianStatusViewModel PedestrianStatusViewModel { get; }
 
     public MainWindowViewModel(IPedestrianSensorService pedestrianSensorService, ITrafficLightService trafficLightService)
     {
@@ -16,5 +17,6 @@ public partial class MainWindowViewModel : ObservableObject
         _trafficLightService = trafficLightService;
 
         TrafficLightStatusViewModel = new(_trafficLightService);
+        PedestrianStatusViewModel = new(_pedestrianSensorService);
     }
 }

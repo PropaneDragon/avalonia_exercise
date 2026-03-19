@@ -33,8 +33,17 @@ mc:Ignorable="d">
 		Margin="8"
 		Grid.Row="0">
 			<local:TrafficLightStatusView
-			DataContext="{Binding TrafficLightStatusViewModel, Mode=OneTime}"
-			/>
+			DataContext="{Binding TrafficLightStatusViewModel, Mode=OneTime}" />
+		</Border>
+		<Border
+		Background="{DynamicResource ButtonBackground}"
+		BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+		BorderThickness="1"
+		CornerRadius="8"
+		Margin="8,0,8,8"
+		Grid.Row="1">
+			<local:PedestrianStatusView
+			DataContext="{Binding PedestrianStatusViewModel, Mode=OneTime}" />
 		</Border>
 	</Grid>
 
