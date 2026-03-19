@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:controls="using:AvaloniaExercise.Controls"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:i="https://github.com/projektanker/icons.avalonia"
+			 xmlns:vm="using:AvaloniaExercise.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800"
+			 x:Class="AvaloniaExercise.TrafficLightStatusView"
+			 x:DataType="vm:TrafficLightStatusViewModel">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+			Width="Auto" />
+			<ColumnDefinition
+			Width="*"/>
+			<ColumnDefinition
+			Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<Border
+		Grid.Column="0">
+			<controls:TrafficLight
+			RedEnabled="{Binding RedLightIsActive}"
+			YellowEnabled="{Binding YellowLightIsActive}"
+			GreenEnabled="{Binding GreenLightIsActive}"
+			Margin="8,8,0,8"/>
+		</Border>
+		<Border
+		Grid.Column="1">
+			<ProgressBar
+			Classes.animate="{Binding IsCrossing, FallbackValue=False}"
+			Height="8"
+			Margin="8">
+				<ProgressBar.Transitions>
+					<Transitions>
+						<DoubleTransition
+						Property="Value"
+						Duration="{Binding TotalCrossingTime, TargetNullValue='0:0:0.25' FallbackValue='0:0:0'}"/>
+					</Transitions>
+				</ProgressBar.Transitions>
+				<ProgressBar.Styles>
+					<Style Selector="ProgressBar.animate">
+						<Setter Property="Value" Value="100"/>
+					</Style>
+				</ProgressBar.Styles>
+			</ProgressBar>
+		</Border>
+		<Border
+		Grid.Column="2">
+			<Button
+			VerticalAlignment="Stretch"
+			VerticalContentAlignment="Center"
+			Margin="0,8,8,8"
+			HotKey="Alt+C"
+			Command="{Binding RequestCrossingCommand}">
+				<StackPanel
+				Orientation="Horizontal">
+					<i:Icon Value="fa-bullseye" Margin="0,0,8,0" />
+					<TextBlock>
+						<Run Text="Press to" />
+						<Run TextDecorations="Underline" Text="C" /><!--
+						--><Run Text="ross" />
+					</TextBlock>
+				</StackPanel>
+			</Button>
+		</Border>
+	</Grid>
+</UserControl>
