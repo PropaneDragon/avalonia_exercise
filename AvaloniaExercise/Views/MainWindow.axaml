@@ -43,10 +43,8 @@ mc:Ignorable="d">
         Padding="4"
         Margin="8,0,8,8"
         Grid.Row="1">
-            <ScrollViewer>
-                <local:PedestrianStatusView
-                DataContext="{Binding PedestrianStatusViewModel, Mode=OneTime}" />
-            </ScrollViewer>
+            <local:PedestrianStatusView
+            DataContext="{Binding PedestrianStatusViewModel, Mode=OneTime}" />
         </Border>
     </Grid>
 
