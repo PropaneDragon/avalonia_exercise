@@ -1,34 +1,168 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:controls="using:FluentAvalonia.UI.Controls"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="using:AvaloniaExercise.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaExercise.ViewModels"
-			 xmlns:i="https://github.com/projektanker/icons.avalonia"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="AvaloniaExercise.PedestrianStatusView"
-			 x:DataType="vm:PedestrianStatusViewModel">
+             xmlns:i="https://github.com/projektanker/icons.avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaExercise.PedestrianStatusView"
+             x:DataType="vm:PedestrianStatusViewModel">
 
-	<Grid>
-		<ItemsControl
-			ItemsSource="{Binding Pedestrians}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate
-				x:DataType="{x:Type vm:PedestrianViewModel}">
-					<Border
-					Background="{DynamicResource ButtonBackground}"
-					BorderBrush="{DynamicResource ControlElevationBorderBrush}"
-					BorderThickness="1"
-					CornerRadius="8">
-						<TextBlock Text="{Binding Pedestrian.Name}" />
-					</Border>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</Grid>
+    <UserControl.Resources>
+        <converters:ColourToAvaloniaBrushConverter
+        x:Key="ColourToAvaloniaBrushConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <ItemsControl
+        ItemsSource="{Binding Pedestrians}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate
+                x:DataType="{x:Type vm:PedestrianViewModel}">
+                    <Border
+                    x:Name="PART_Main"
+                    Margin="4"
+                    Width="200"
+                    MinWidth="170"
+                    Background="{DynamicResource ButtonBackground}"
+                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                Width="Auto" />
+                                <ColumnDefinition
+                                Width="*" />
+                                <ColumnDefinition
+                                Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <i:Icon
+                            Grid.Column="0"
+                            ToolTip.Tip="{Binding SpeciesName}"
+                            Value="{Binding SpeciesIcon}"
+                            FontSize="28"
+                            Margin="8"/>
+                            <TextBlock
+                            Grid.Column="1"
+                            TextTrimming="CharacterEllipsis"
+                            Text="{Binding Name}"
+                            VerticalAlignment="Center">
+                                <ToolTip.Tip>
+                                    <ToolTip>
+                                        <StackPanel>
+                                            <TextBlock
+                                            Margin="4"
+                                            Text="{Binding Name}"
+                                            TextAlignment="Center" />
+                                            <TextBlock
+                                            Margin="4"
+                                            Text="{Binding WaitTime, StringFormat='mm\\:ss'}"
+                                            TextAlignment="Center" />
+                                            <Separator
+                                            Margin="0,4"/>
+                                            <Grid
+                                            Margin="4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <i:Icon
+                                                Grid.Column="0"
+                                                Value="fa-shirt"
+                                                FontSize="18"
+                                                Foreground="{Binding AssociatedPedestrian.ShirtColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaBrushConverter}}"/>
+                                                <!-- FA Icons have hidden the shorts icon behind a paywall for some reason, so socks it is! -->
+                                                <i:Icon
+                                                Grid.Column="1"
+                                                Value="fa-socks" 
+                                                FontSize="18"
+                                                Foreground="{Binding AssociatedPedestrian.ShortsColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaBrushConverter}}"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTip.Tip>
+                            </TextBlock>
+                            <i:Icon
+                            ToolTip.Tip="Waiting"
+                            Classes="status"
+                            IsVisible="{Binding IsWaiting}"
+                            Grid.Column="2"
+                            Value="fa-hand"
+                            Foreground="{DynamicResource TrafficLightRed}"
+                            FontSize="18"
+                            Margin="8"/>
+                            <i:Icon
+                            ToolTip.Tip="Crossing"
+                            Classes="status"
+                            IsVisible="{Binding IsCrossing}"
+                            Grid.Column="2"
+                            Value="fa-person-walking"
+                            Foreground="{DynamicResource TrafficLightGreen}"
+                            FontSize="18"
+                            Margin="8"/>
+                            <i:Icon
+                            ToolTip.Tip="Crossed"
+                            Classes="status"
+                            IsVisible="{Binding HasCrossed}"
+                            Grid.Column="2"
+                            Value="fa-flag-checkered"
+                            Foreground="{DynamicResource TrafficLightGreen}"
+                            FontSize="18"
+                            Margin="8"/>
+                            <Grid.Styles>
+                                <Style Selector="i|Icon.status[IsVisible=true]">
+                                    <Style.Animations>
+                                        <Animation
+                                        Duration="0:0:0.2">
+                                            <KeyFrame
+                                            Cue="0%">
+                                                <Setter
+                                                Property="Opacity"
+                                                Value="0" />
+                                            </KeyFrame>
+                                            <KeyFrame
+                                            Cue="100%">
+                                                <Setter
+                                                Property="Opacity"
+                                                Value="1" />
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                            </Grid.Styles>
+                        </Grid>
+                        <Border.Styles>
+                            <Style Selector="Border#PART_Main[IsVisible=true]">
+                                <Style.Animations>
+                                    <Animation
+                                    Duration="0:0:0.2">
+                                        <KeyFrame
+                                        Cue="0%">
+                                            <Setter
+                                            Property="Opacity"
+                                            Value="0" />
+                                        </KeyFrame>
+                                        <KeyFrame
+                                        Cue="100%">
+                                            <Setter
+                                            Property="Opacity"
+                                            Value="1" />
+                                        </KeyFrame>
+                                    </Animation>
+                                </Style.Animations>
+                            </Style>
+                        </Border.Styles>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </UserControl>

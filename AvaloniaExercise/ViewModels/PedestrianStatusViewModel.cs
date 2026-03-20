@@ -28,7 +28,7 @@ namespace AvaloniaExercise.ViewModels
             }
             else if (e.Operation == PedestrianOperation.Left)
             {
-                Pedestrians.RemoveAll(viewModel => viewModel.Pedestrian == e.Pedestrian);
+                Pedestrians.RemoveAll(viewModel => viewModel.AssociatedPedestrian == e.Pedestrian);
             }
         }
     }
