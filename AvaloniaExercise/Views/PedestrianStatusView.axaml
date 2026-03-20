@@ -16,8 +16,49 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+            Height="Auto" />
+            <RowDefinition
+            Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel
+            Orientation="Horizontal">
+                <i:Icon
+                Margin="8"
+                Value="fa-filter" />
+                <ToggleButton
+                IsChecked="{Binding FilterWaiting}"
+                Margin="4">
+                    <StackPanel
+                    Orientation="Horizontal">
+                        <TextBlock
+                        Text="Waiting" />
+                        <controls:InfoBadge
+                        Value="{Binding WaitingPedestrians, FallbackValue=0}"
+                        Margin="8,0,0,0" />
+                    </StackPanel>
+                </ToggleButton>
+                <ToggleButton
+                IsChecked="{Binding FilterCrossing}"
+                Margin="4">
+                    <StackPanel
+                    Orientation="Horizontal">
+                        <TextBlock
+                        Text="Crossing" />
+                        <controls:InfoBadge
+                        Value="{Binding CrossingPedestrians, FallbackValue=0}"
+                        Margin="8,0,0,0" />
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
+            <Separator
+            Margin="0,4"/>
+        </StackPanel>
         <ItemsControl
-        ItemsSource="{Binding Pedestrians}">
+        Grid.Row="1"
+        ItemsSource="{Binding FilteredPedestrians}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -45,11 +86,11 @@
                                 Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid
-                                Grid.Column="0">
+                            Grid.Column="0">
                                 <Ellipse
                                 Margin="4"
                                 HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">                                    
+                                VerticalAlignment="Stretch">
                                     <Ellipse.Fill>
                                         <LinearGradientBrush>
                                             <LinearGradientBrush.GradientStops>
