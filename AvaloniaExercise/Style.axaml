@@ -15,7 +15,7 @@
                 <ResourceDictionary>
                     <!-- Icon -->
                     <Color
-                    x:Key="IconShadowColour">#66000000</Color>
+                    x:Key="IconShadowColour">#AA000000</Color>
 
                     <!-- Progress bar overrides -->
                     <x:Double x:Key="ProgressBarTrackHeight">2</x:Double>
