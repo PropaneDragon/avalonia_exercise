@@ -1,12 +1,14 @@
 ﻿using AvaloniaExercise.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace AvaloniaExercise.ViewModels
 {
-    public partial class PedestrianViewModel : ObservableObject
+    public record TimerTickMessage;
+
+    public partial class PedestrianViewModel : ObservableObject, IRecipient<TimerTickMessage>
     {
         public Pedestrian AssociatedPedestrian { get; }
 
@@ -30,6 +32,8 @@ namespace AvaloniaExercise.ViewModels
         {
             AssociatedPedestrian = pedestrian;
             AssociatedPedestrian.StatusChanged += Pedestrian_StatusChanged;
+
+            WeakReferenceMessenger.Default.RegisterAll(this);
         }
 
         private void Pedestrian_StatusChanged(object? sender, PedestrianStatus e)
@@ -47,5 +51,7 @@ namespace AvaloniaExercise.ViewModels
         {
             return HashCode.Combine(AssociatedPedestrian);
         }
+
+        public void Receive(TimerTickMessage message) => OnPropertyChanged(nameof(WaitTime));
     }
 }
