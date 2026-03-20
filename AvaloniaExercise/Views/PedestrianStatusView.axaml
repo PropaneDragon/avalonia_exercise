@@ -11,8 +11,8 @@
              x:DataType="vm:PedestrianStatusViewModel">
 
     <UserControl.Resources>
-        <converters:ColourToAvaloniaBrushConverter
-        x:Key="ColourToAvaloniaBrushConverter" />
+        <converters:ColourToAvaloniaColourConverter
+        x:Key="ColourToAvaloniaColourConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -44,52 +44,60 @@
                                 <ColumnDefinition
                                 Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <i:Icon
-                            Grid.Column="0"
-                            ToolTip.Tip="{Binding SpeciesName}"
-                            Value="{Binding SpeciesIcon}"
-                            FontSize="28"
-                            Margin="8"/>
-                            <TextBlock
+                            <Grid
+                                Grid.Column="0">
+                                <Ellipse
+                                Margin="4"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">                                    
+                                    <Ellipse.Fill>
+                                        <LinearGradientBrush>
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop
+                                                Color="{Binding AssociatedPedestrian.ShirtColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaColourConverter}}"
+                                                Offset="0"/>
+                                                <GradientStop
+                                                Color="{Binding AssociatedPedestrian.ShirtColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaColourConverter}}"
+                                                Offset="0.499"/>
+                                                <GradientStop
+                                                Color="{Binding AssociatedPedestrian.ShortsColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaColourConverter}}"
+                                                Offset="0.501"/>
+                                                <GradientStop
+                                                Color="{Binding AssociatedPedestrian.ShortsColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaColourConverter}}"
+                                                Offset="1"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Grid>
+                                    <i:Icon
+                                    Effect="blur(4)"
+                                    Foreground="{DynamicResource IconShadowColour}"
+                                    Value="{Binding SpeciesIcon}"
+                                    FontSize="18"
+                                    Margin="8"/>
+                                    <i:Icon
+                                    ToolTip.Tip="{Binding SpeciesName}"
+                                    Value="{Binding SpeciesIcon}"
+                                    FontSize="18"
+                                    Margin="8"/>
+                                </Grid>
+                            </Grid>
+                            <StackPanel
                             Grid.Column="1"
-                            TextTrimming="CharacterEllipsis"
-                            Text="{Binding Name}"
                             VerticalAlignment="Center">
-                                <ToolTip.Tip>
-                                    <ToolTip>
-                                        <StackPanel>
-                                            <TextBlock
-                                            Margin="4"
-                                            Text="{Binding Name}"
-                                            TextAlignment="Center" />
-                                            <TextBlock
-                                            Margin="4"
-                                            Text="{Binding WaitTime, StringFormat='mm\\:ss'}"
-                                            TextAlignment="Center" />
-                                            <Separator
-                                            Margin="0,4"/>
-                                            <Grid
-                                            Margin="4">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <i:Icon
-                                                Grid.Column="0"
-                                                Value="fa-shirt"
-                                                FontSize="18"
-                                                Foreground="{Binding AssociatedPedestrian.ShirtColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaBrushConverter}}"/>
-                                                <!-- FA Icons have hidden the shorts icon behind a paywall for some reason, so socks it is! -->
-                                                <i:Icon
-                                                Grid.Column="1"
-                                                Value="fa-socks" 
-                                                FontSize="18"
-                                                Foreground="{Binding AssociatedPedestrian.ShortsColor, Mode=OneTime, Converter={StaticResource ColourToAvaloniaBrushConverter}}"/>
-                                            </Grid>
-                                        </StackPanel>
-                                    </ToolTip>
-                                </ToolTip.Tip>
-                            </TextBlock>
+                                <TextBlock
+                                TextTrimming="CharacterEllipsis"
+                                Text="{Binding Name}"
+                                VerticalAlignment="Center"
+                                TextAlignment="Center" />
+                                <TextBlock
+                                Theme="{DynamicResource CaptionTextBlockStyle}"
+                                Foreground="{DynamicResource TextFillColorSecondary}"
+                                TextAlignment="Center"
+                                Text="{Binding WaitTime, StringFormat='mm\\:ss'}" />
+
+                            </StackPanel>
                             <i:Icon
                             ToolTip.Tip="Waiting"
                             Classes="status"

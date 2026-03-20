@@ -1,18 +1,28 @@
 <Styles xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:controls="using:AvaloniaExercise.Controls">
-	<Design.PreviewWith>
-		<Border Padding="20">
-			<controls:TrafficLight />
-		</Border>
-	</Design.PreviewWith>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:AvaloniaExercise.Controls">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <controls:TrafficLight />
+        </Border>
+    </Design.PreviewWith>
 
-	<Styles.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude
-				Source="/Themes/TrafficLight.axaml" />
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</Styles.Resources>
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude
+                Source="/Themes/TrafficLight.axaml" />
+                <ResourceDictionary>
+                    <!-- Icon -->
+                    <Color
+                    x:Key="IconShadowColour">#66000000</Color>
+
+                    <!-- Progress bar overrides -->
+                    <x:Double x:Key="ProgressBarTrackHeight">2</x:Double>
+                    <CornerRadius x:Key="ProgressBarTrackCornerRadius">2</CornerRadius>
+                    <SolidColorBrush x:Key="ProgressBarBackground">#0FFFFFFF</SolidColorBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
 </Styles>

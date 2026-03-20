@@ -64,11 +64,20 @@
 		Property="Foreground"
 		Value="{DynamicResource ButtonForeground}" />
 		<Setter
+		Property="BorderBrush"
+		Value="{DynamicResource ControlElevationBorderBrush}" />
+		<Setter
+		Property="Padding"
+		Value="4" />
+		<Setter
+		Property="BorderThickness"
+		Value="1" />
+		<Setter
 		Property="LightMargin"
 		Value="4,4" />
 		<Setter
 		Property="LightSize"
-		Value="24" />
+		Value="20" />
 		<Setter
 		Property="CornerRadius"
 		Value="8" />
@@ -87,8 +96,9 @@
 				<Border
 				CornerRadius="{TemplateBinding CornerRadius}"
 				Background="{TemplateBinding Background}"
-				Padding="8"
-				BorderThickness="0">
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" 
+				Padding="{TemplateBinding Padding}">
 					<StackPanel
 					Orientation="Horizontal">
 						<Ellipse
