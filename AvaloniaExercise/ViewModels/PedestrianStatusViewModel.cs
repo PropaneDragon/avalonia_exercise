@@ -47,7 +47,10 @@ namespace AvaloniaExercise.ViewModels
             _pedestrianSensorService = pedestrianSensorService;
             _pedestrianSensorService.PedestriansChanged += PedestrianSensorService_PedestriansChanged;
 
-            Pedestrians.AddRange(_pedestrianSensorService.Pedestrians.Select(pedestrian => new PedestrianViewModel(pedestrian)));
+            lock (_pedestrianLock)
+            {
+                Pedestrians.AddRange(_pedestrianSensorService.Pedestrians.Select(pedestrian => new PedestrianViewModel(pedestrian)));
+            }
 
             ReapplyPedestrianFilter();
 
@@ -83,8 +86,11 @@ namespace AvaloniaExercise.ViewModels
 
         private void ReapplyPedestrianFilter()
         {
-            FilteredPedestrians.RemoveAll(pedestrian => !Pedestrians.Contains(pedestrian) || !MatchesFilter(pedestrian));
-            FilteredPedestrians.AddRange(Pedestrians.Where(pedestrian => MatchesFilter(pedestrian) && !FilteredPedestrians.Contains(pedestrian)));
+            lock (_pedestrianLock)
+            {
+                FilteredPedestrians.RemoveAll(pedestrian => !Pedestrians.Contains(pedestrian) || !MatchesFilter(pedestrian));
+                FilteredPedestrians.AddRange(Pedestrians.Where(pedestrian => MatchesFilter(pedestrian) && !FilteredPedestrians.Contains(pedestrian)));
+            }
         }
 
         private void Pedestrian_StatusChanged(object? sender, PedestrianStatus e)
